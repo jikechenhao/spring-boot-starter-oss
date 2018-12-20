@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>1.3.3.RELEASE</spring-boot.version>
         <commons-io.version>2.5</commons-io.version>
-        <aliyun-oss.version>2.2.1</aliyun-oss.version>
+        <aliyun-oss.version>2.7.0</aliyun-oss.version>
     </properties>
 
     <developers>
