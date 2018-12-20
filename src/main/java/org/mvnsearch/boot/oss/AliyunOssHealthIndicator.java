@@ -18,6 +18,7 @@ public class AliyunOssHealthIndicator extends AbstractHealthIndicator {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Override
     protected void doHealthCheck(Health.Builder builder) throws Exception {
         DataSource ds = fileStorageService.get("ok.txt");
         if (ds != null) {
@@ -26,5 +27,4 @@ public class AliyunOssHealthIndicator extends AbstractHealthIndicator {
             builder.down().withDetail("ok.txt", "Not found");
         }
     }
-
 }

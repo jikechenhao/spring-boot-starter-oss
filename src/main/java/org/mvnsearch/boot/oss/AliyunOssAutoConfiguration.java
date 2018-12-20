@@ -35,6 +35,7 @@ public class AliyunOssAutoConfiguration {
         fileStorageServiceOss.setAccessKey(properties.getKey());
         fileStorageServiceOss.setAccessSecret(properties.getSecret());
         fileStorageServiceOss.setBucketName(properties.getBucket());
+        fileStorageServiceOss.setEndpoint(properties.getEndpoint());
         return fileStorageServiceOss;
     }
 

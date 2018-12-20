@@ -44,8 +44,9 @@ public class ByteArrayDataSource implements DataSource {
         DSByteArrayOutputStream os = new DSByteArrayOutputStream();
         byte[] buf = new byte[8192];
         int len;
-        while ((len = is.read(buf)) > 0)
+        while ((len = is.read(buf)) > 0) {
             os.write(buf, 0, len);
+        }
         this.data = os.getBuf();
         this.len = os.getCount();
 
@@ -100,11 +101,14 @@ public class ByteArrayDataSource implements DataSource {
      * @return the InputStream
      * @throws IOException if no data has been set
      */
+    @Override
     public InputStream getInputStream() throws IOException {
-        if (data == null)
+        if (data == null) {
             throw new IOException("no data");
-        if (len < 0)
+        }
+        if (len < 0) {
             len = data.length;
+        }
         return new ByteArrayInputStream(data, 0, len);
     }
 
@@ -115,6 +119,7 @@ public class ByteArrayDataSource implements DataSource {
      *
      * @throws IOException always
      */
+    @Override
     public OutputStream getOutputStream() throws IOException {
         throw new IOException("cannot do this");
     }
@@ -124,6 +129,7 @@ public class ByteArrayDataSource implements DataSource {
      *
      * @return the MIME type
      */
+    @Override
     public String getContentType() {
         return type;
     }
@@ -134,6 +140,7 @@ public class ByteArrayDataSource implements DataSource {
      *
      * @return the name of this data
      */
+    @Override
     public String getName() {
         return name;
     }

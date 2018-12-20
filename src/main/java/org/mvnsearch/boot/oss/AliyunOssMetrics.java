@@ -17,6 +17,7 @@ import java.util.List;
 @Component
 public class AliyunOssMetrics implements PublicMetrics {
 
+    @Override
     public Collection<Metric<?>> metrics() {
         List<Metric<?>> metrics = new LinkedList<Metric<?>>();
         metrics.add(new Metric<Number>("oss.upload.success", FileStorageServiceOssImpl.fileUploadSuccess.get()));

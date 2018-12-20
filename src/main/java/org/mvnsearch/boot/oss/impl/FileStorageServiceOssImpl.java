@@ -24,6 +24,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
     String accessKey;
     String accessSecret;
     String bucketName;
+    String endpoint;
     public static MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
     public static String DEFAULT_CONTENT_TYPE = "application/octet-stream";
     public static final AtomicLong fileUploadSuccess = new AtomicLong();
@@ -47,9 +48,14 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
         this.bucketName = bucketName;
     }
 
+    public void setEndpoint(String endpoint){
+        this.endpoint = endpoint;
+    }
+
     @SuppressWarnings("deprecation")
+    @Override
     public void afterPropertiesSet() throws Exception {
-        this.ossClient = new OSSClient(accessKey, accessSecret);
+        this.ossClient = new OSSClient(endpoint,accessKey, accessSecret);
     }
 
     /**
@@ -59,6 +65,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
      * @return file name
      * @throws IOException IO Exception
      */
+    @Override
     public String save(DataSource ds) throws IOException {
         String newName;
         newName = getUuidName(ds.getName());
@@ -75,6 +82,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
      * @return file name with directory name
      * @throws IOException IO Exception
      */
+    @Override
     public String saveToDirectory(String directory, DataSource ds) throws IOException {
         String newName;
         newName = directory + "/" + getUuidName(ds.getName());
@@ -89,6 +97,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
      * @param fileName file name
      * @throws IOException IO Exception
      */
+    @Override
     public void delete(String fileName) throws IOException {
         ossClient.deleteObject(bucketName, fileName);
         fileDeleteCounts.incrementAndGet();
@@ -101,6 +110,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
      * @return file data source
      * @throws IOException IO Exception
      */
+    @Override
     public DataSource get(String fileName) throws IOException {
         OSSObject ossObject = ossClient.getObject(bucketName, fileName);
         if (ossObject != null) {
@@ -113,6 +123,7 @@ public class FileStorageServiceOssImpl implements FileStorageService, Initializi
     }
 
 
+    @Override
     public void rename(String oldName, String newName) throws IOException {
         boolean keyExists = true;
         try {
